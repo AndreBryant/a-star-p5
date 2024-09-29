@@ -16,7 +16,11 @@ const AStar = {
       let current = openSet[0];
 
       if (current === goal) {
-        return AStar.reconstructPath(goal);
+        return {
+          path: AStar.reconstructPath(goal),
+          visitedNodes: closedSet,
+          openNodes: openSet,
+        };
       }
 
       // remove current from the open set

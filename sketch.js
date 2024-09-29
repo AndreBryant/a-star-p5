@@ -9,6 +9,8 @@ let tiles = [];
 let startNode = null;
 let goalNode = null;
 let path = [];
+let visitedNodes = [];
+let openNodes = [];
 
 function setup() {
   rows = cWidth / tileSize;
@@ -29,7 +31,11 @@ function setup() {
   createCanvas(cWidth, cHeight);
 
   // get solution
-  path = AStar.search(tiles, startNode, goalNode);
+  ({ path, visitedNodes, openNodes } = AStar.search(
+    tiles,
+    startNode,
+    goalNode
+  ));
 
   // update tiles to draw solution
   for (const p of path) {
@@ -38,10 +44,30 @@ function setup() {
       node.isPartOfSolution = true;
     }
   }
+
+  // draw the nodes on the open and closed set
+  for (const n of visitedNodes) {
+    let node = tiles[n.x][n.y];
+    if (!node.isStart && !node.isGoal && !node.isPartOfSolution) {
+      node.isVisited = true;
+    }
+  }
+
+  for (const n of openNodes) {
+    let node = tiles[n.x][n.y];
+    if (
+      !node.isStart &&
+      !node.isGoal &&
+      !node.isPartOfSolution & !node.isVisited
+    ) {
+      node.stillOpen = true;
+    }
+  }
 }
 
 function draw() {
-  background(72);
+  noStroke();
+  background(189, 189, 189);
   drawGrid();
   noLoop();
 }
