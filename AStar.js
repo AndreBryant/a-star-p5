@@ -46,7 +46,11 @@ const AStar = {
     }
 
     // if no path found
-    return [];
+    return {
+      path: [],
+      visitedNodes: closedSet,
+      openNodes: openSet,
+    };
   },
   distance: (current, neighbor) => {
     const dx = current.x - neighbor.x;

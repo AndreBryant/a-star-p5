@@ -20,6 +20,10 @@ function setup() {
   for (let x = 0; x < rows; x++) {
     tiles[x] = [];
     for (let y = 0; y < cols; y++) {
+      // if (x == floor(rows / 2)) {
+      //   tiles[x][y] = new Node(x, y, 1);
+      //   continue;
+      // }
       tiles[x][y] = new Node(x, y, p);
     }
   }
@@ -69,7 +73,7 @@ function draw() {
   noStroke();
   background(189, 189, 189);
   drawGrid();
-  noLoop();
+  // noLoop();
 }
 
 function assign() {
