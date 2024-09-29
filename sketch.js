@@ -43,6 +43,7 @@ function setup() {
 function draw() {
   background(72);
   drawGrid();
+  noLoop();
 }
 
 function assign() {
