@@ -1,7 +1,7 @@
 const cWidth = 600;
 const cHeight = 600;
 const tileSize = 20;
-const p = 0.05; // probability that a tile will be a wall
+const p = 0.04; // probability that a tile will be a wall
 let rows;
 let cols;
 

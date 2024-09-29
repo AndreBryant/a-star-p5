@@ -12,7 +12,8 @@ class Node {
     this.fCost = Infinity;
   }
 
-  //   TODO fix this
+  //   TODO refactor this
+  //   looks ugly
   show() {
     stroke(120, 120, 120, 36);
     if (this.isWall) {
@@ -35,7 +36,7 @@ class Node {
       noStroke();
       fill(0, 204, 204);
       rect(this.x * tileSize, this.y * tileSize, tileSize, tileSize);
-      textSize(16);
+      textSize(tileSize);
       textAlign(CENTER, CENTER);
       fill(30);
       text(
@@ -47,7 +48,7 @@ class Node {
       noStroke();
       fill(0, 255, 0);
       rect(this.x * tileSize, this.y * tileSize, tileSize, tileSize);
-      textSize(16);
+      textSize(tileSize);
       textAlign(CENTER, CENTER);
       fill(30);
       text(
