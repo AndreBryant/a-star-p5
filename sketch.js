@@ -5,7 +5,7 @@ const p = 0.04; // probability that a tile will be a wall
 let rows;
 let cols;
 
-let tiles = [];
+let nodes = [];
 let startNode = null;
 let goalNode = null;
 let path = [];
@@ -18,32 +18,29 @@ function setup() {
 
   // initialize the tiles as a Node object
   for (let x = 0; x < rows; x++) {
-    tiles[x] = [];
+    nodes[x] = [];
     for (let y = 0; y < cols; y++) {
       // if (x == floor(rows / 2)) {
       //   tiles[x][y] = new Node(x, y, 1);
       //   continue;
       // }
-      tiles[x][y] = new Node(x, y, p);
+      nodes[x][y] = new Node(x, y, p);
     }
   }
 
   // assign start and goal nodes
   assign();
 
-  // randomly assign start and goal nodes
-  createCanvas(cWidth, cHeight);
-
   // get solution
   ({ path, visitedNodes, openNodes } = AStar.search(
-    tiles,
+    nodes,
     startNode,
     goalNode
   ));
 
   // update tiles to draw solution
   for (const p of path) {
-    let node = tiles[p.x][p.y];
+    let node = nodes[p.x][p.y];
     if (!node.isStart && !node.isGoal) {
       node.isPartOfSolution = true;
     }
@@ -51,14 +48,14 @@ function setup() {
 
   // draw the nodes on the open and closed set
   for (const n of visitedNodes) {
-    let node = tiles[n.x][n.y];
+    let node = nodes[n.x][n.y];
     if (!node.isStart && !node.isGoal && !node.isPartOfSolution) {
       node.isVisited = true;
     }
   }
 
   for (const n of openNodes) {
-    let node = tiles[n.x][n.y];
+    let node = nodes[n.x][n.y];
     if (
       !node.isStart &&
       !node.isGoal &&
@@ -67,6 +64,8 @@ function setup() {
       node.stillOpen = true;
     }
   }
+
+  createCanvas(cWidth, cHeight);
 }
 
 function draw() {
@@ -81,26 +80,26 @@ function assign() {
   do {
     startRow = floor(random(rows));
     startCol = floor(random(cols));
-  } while (tiles[startRow][startCol].isWall);
+  } while (nodes[startRow][startCol].isWall);
 
   do {
     goalRow = floor(random(rows));
     goalCol = floor(random(cols));
   } while (
-    tiles[goalRow][goalCol].isWall ||
+    nodes[goalRow][goalCol].isWall ||
     (goalRow === startRow && goalCol === startCol)
   );
 
-  startNode = tiles[startRow][startCol];
+  startNode = nodes[startRow][startCol];
   startNode.isStart = true;
-  goalNode = tiles[goalRow][goalCol];
+  goalNode = nodes[goalRow][goalCol];
   goalNode.isGoal = true;
 }
 
 function drawGrid() {
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < cols; j++) {
-      tiles[i][j].show();
+      nodes[i][j].show();
     }
   }
 }
